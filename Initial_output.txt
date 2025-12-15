@@ -1,0 +1,571 @@
+(venv) PS D:\AI\SemRAG\ambedkargpt> python example.py                            
+Initializing AmbedkarGPT...
+2025-12-15 10:37:37,253 - src.pipeline.ambedkargpt - INFO - Initializing AmbedkarGPT pipeline
+
+Processing document (this may take several minutes)...
+Steps:
+1. Loading PDF
+2. Semantic chunking
+3. Extracting entities
+4. Building knowledge graph
+5. Detecting communities
+6. Generating summaries
+7. Initializing retrieval
+2025-12-15 10:37:37,419 - src.pipeline.ambedkargpt - INFO - Starting document processing pipeline (with checkpoints)
+2025-12-15 10:37:37,419 - src.pipeline.ambedkargpt - INFO - Loading PDF: data/Ambedkar_book.pdf
+2025-12-15 10:37:37,734 - src.pipeline.ambedkargpt - INFO - Extracted 263454 characters from PDF
+2025-12-15 10:37:37,734 - src.pipeline.ambedkargpt - INFO - Step 1: Semantic Chunking
+2025-12-15 10:37:37,734 - src.chunking.semantic_chunker - INFO - Starting semantic chunking
+2025-12-15 10:37:37,771 - src.chunking.semantic_chunker - INFO - Split into 2116 sentences
+Embedding sentences (Semantic Chunking): 100%|█| 2116/2116 [25:21<00:00,  1.39se
+Computing cosine similarities: 100%|████| 2115/2115 [00:00<00:00, 6040.90pair/s]
+2025-12-15 11:03:00,083 - src.chunking.semantic_chunker - INFO - Computed 2115 similarity scores
+2025-12-15 11:03:00,083 - src.chunking.semantic_chunker - INFO - Found 2 initial chunks
+cessed_chunks
+2025-12-15 11:03:00,122 - src.pipeline.ambedkargpt - INFO - Step 3: Entity Extraction
+2025-12-15 11:03:00,132 - src.graph.entity_extractor - INFO - Extracting entities from 288 chunks
+2025-12-15 11:03:19,942 - src.graph.entity_extractor - INFO - Extracted 11 entities and 10 relationships from chunk 0     
+2025-12-15 11:03:28,461 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 1       
+2025-12-15 11:03:35,450 - src.graph.entity_extractor - INFO - Extracted 5 entities and 3 relationships from chunk 2       
+2025-12-15 11:03:46,777 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 3
+2025-12-15 11:04:03,857 - src.graph.entity_extractor - INFO - Extracted 12 entities and 8 relationships from chunk 4
+2025-12-15 11:04:10,463 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 5
+2025-12-15 11:04:15,603 - src.graph.entity_extractor - INFO - Extracted 3 entities and 2 relationships from chunk 6
+2025-12-15 11:04:23,231 - src.graph.entity_extractor - INFO - Extracted 4 entities and 3 relationships from chunk 7
+2025-12-15 11:04:35,198 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 8
+2025-12-15 11:04:45,890 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 9
+2025-12-15 11:04:51,620 - src.graph.entity_extractor - INFO - Extracted 3 entities and 2 relationships from chunk 10
+2025-12-15 11:05:02,720 - src.graph.entity_extractor - INFO - Extracted 5 entities and 5 relationships from chunk 11
+2025-12-15 11:05:15,004 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 12
+2025-12-15 11:05:21,380 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 13
+2025-12-15 11:05:32,167 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 14
+2025-12-15 11:05:40,505 - src.graph.entity_extractor - INFO - Extracted 5 entities and 5 relationships from chunk 15
+2025-12-15 11:05:48,209 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 16
+2025-12-15 11:05:56,742 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 17
+2025-12-15 11:06:05,381 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 18
+2025-12-15 11:06:14,184 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 19
+2025-12-15 11:06:24,902 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 20
+2025-12-15 11:06:34,418 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 21
+2025-12-15 11:06:46,062 - src.graph.entity_extractor - INFO - Extracted 6 entities and 6 relationships from chunk 22
+2025-12-15 11:06:54,980 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 23
+2025-12-15 11:07:03,940 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 24
+2025-12-15 11:07:14,842 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 25
+2025-12-15 11:07:23,774 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 26
+2025-12-15 11:07:36,158 - src.graph.entity_extractor - INFO - Extracted 7 entities and 8 relationships from chunk 27
+2025-12-15 11:07:44,180 - src.graph.entity_extractor - INFO - Extracted 6 entities and 3 relationships from chunk 28
+2025-12-15 11:07:56,075 - src.graph.entity_extractor - INFO - Extracted 10 entities and 7 relationships from chunk 29
+2025-12-15 11:08:02,567 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 30
+2025-12-15 11:08:16,291 - src.graph.entity_extractor - INFO - Extracted 8 entities and 8 relationships from chunk 31
+2025-12-15 11:08:26,842 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 32
+2025-12-15 11:08:36,120 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 33
+2025-12-15 11:08:45,192 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 34
+2025-12-15 11:08:53,246 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 35
+2025-12-15 11:09:02,150 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 36
+2025-12-15 11:09:11,646 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 37
+2025-12-15 11:09:16,795 - src.graph.entity_extractor - INFO - Extracted 4 entities and 3 relationships from chunk 38
+2025-12-15 11:09:30,833 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 39
+2025-12-15 11:09:46,689 - src.graph.entity_extractor - INFO - Extracted 10 entities and 7 relationships from chunk 40
+2025-12-15 11:10:01,524 - src.graph.entity_extractor - INFO - Extracted 9 entities and 7 relationships from chunk 41
+2025-12-15 11:10:11,800 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 42
+2025-12-15 11:10:25,765 - src.graph.entity_extractor - INFO - Extracted 8 entities and 10 relationships from chunk 43
+2025-12-15 11:10:36,439 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 44
+2025-12-15 11:10:48,411 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 45
+2025-12-15 11:10:56,919 - src.graph.entity_extractor - INFO - Extracted 8 entities and 4 relationships from chunk 46
+2025-12-15 11:11:09,401 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 47
+2025-12-15 11:11:21,784 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 48
+2025-12-15 11:11:44,763 - src.graph.entity_extractor - INFO - Extracted 10 entities and 6 relationships from chunk 49
+2025-12-15 11:11:59,800 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 50
+2025-12-15 11:12:09,720 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 51
+2025-12-15 11:12:17,026 - src.graph.entity_extractor - INFO - Extracted 5 entities and 3 relationships from chunk 52
+2025-12-15 11:12:30,671 - src.graph.entity_extractor - INFO - Extracted 10 entities and 8 relationships from chunk 53
+2025-12-15 11:12:42,584 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 54
+2025-12-15 11:12:53,170 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 55
+2025-12-15 11:13:06,791 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 56
+2025-12-15 11:13:13,944 - src.graph.entity_extractor - INFO - Extracted 4 entities and 3 relationships from chunk 57
+2025-12-15 11:13:27,719 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 58
+2025-12-15 11:13:39,390 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 59
+2025-12-15 11:13:56,671 - src.graph.entity_extractor - INFO - Extracted 12 entities and 10 relationships from chunk 60
+2025-12-15 11:14:08,886 - src.graph.entity_extractor - INFO - Extracted 6 entities and 3 relationships from chunk 61
+2025-12-15 11:14:23,559 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 62
+2025-12-15 11:14:37,355 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 63
+2025-12-15 11:14:50,557 - src.graph.entity_extractor - INFO - Extracted 9 entities and 5 relationships from chunk 64
+2025-12-15 11:15:02,806 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 65
+2025-12-15 11:15:17,143 - src.graph.entity_extractor - INFO - Extracted 7 entities and 7 relationships from chunk 66
+2025-12-15 11:15:33,436 - src.graph.entity_extractor - INFO - Extracted 10 entities and 8 relationships from chunk 67
+2025-12-15 11:15:49,474 - src.graph.entity_extractor - INFO - Extracted 10 entities and 9 relationships from chunk 68
+2025-12-15 11:16:07,800 - src.graph.entity_extractor - INFO - Extracted 9 entities and 9 relationships from chunk 69
+2025-12-15 11:16:21,497 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 70
+2025-12-15 11:16:32,543 - src.graph.entity_extractor - INFO - Extracted 7 entities and 7 relationships from chunk 71
+2025-12-15 11:16:42,093 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 72
+2025-12-15 11:16:51,901 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 73
+2025-12-15 11:17:01,433 - src.graph.entity_extractor - INFO - Extracted 4 entities and 3 relationships from chunk 74
+2025-12-15 11:17:09,626 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 75
+2025-12-15 11:17:14,706 - src.graph.entity_extractor - INFO - Extracted 4 entities and 3 relationships from chunk 76
+2025-12-15 11:17:23,899 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 77
+2025-12-15 11:17:34,081 - src.graph.entity_extractor - INFO - Extracted 6 entities and 6 relationships from chunk 78
+2025-12-15 11:17:45,503 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 79
+2025-12-15 11:17:51,489 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 80
+2025-12-15 11:17:56,081 - src.graph.entity_extractor - INFO - Extracted 3 entities and 2 relationships from chunk 81
+2025-12-15 11:18:02,371 - src.graph.entity_extractor - INFO - Extracted 3 entities and 2 relationships from chunk 82
+2025-12-15 11:18:10,855 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 83
+2025-12-15 11:18:19,472 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 84
+2025-12-15 11:18:26,318 - src.graph.entity_extractor - INFO - Extracted 4 entities and 3 relationships from chunk 85
+2025-12-15 11:18:33,822 - src.graph.entity_extractor - INFO - Extracted 4 entities and 4 relationships from chunk 86
+2025-12-15 11:18:46,660 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 87
+2025-12-15 11:18:55,263 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 88
+2025-12-15 11:19:11,104 - src.graph.entity_extractor - INFO - Extracted 10 entities and 8 relationships from chunk 89
+2025-12-15 11:19:22,609 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 90
+2025-12-15 11:19:33,988 - src.graph.entity_extractor - INFO - Extracted 9 entities and 6 relationships from chunk 91
+2025-12-15 11:19:42,985 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 92
+2025-12-15 11:19:51,384 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 93
+2025-12-15 11:20:02,902 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 94
+2025-12-15 11:20:14,308 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 95
+2025-12-15 11:20:28,493 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 96
+2025-12-15 11:20:39,459 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 97
+2025-12-15 11:20:48,533 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 98
+2025-12-15 11:21:07,874 - src.graph.entity_extractor - INFO - Extracted 14 entities and 14 relationships from chunk 99
+2025-12-15 11:21:18,142 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 100
+2025-12-15 11:21:35,219 - src.graph.entity_extractor - INFO - Extracted 11 entities and 10 relationships from chunk 101
+2025-12-15 11:21:46,784 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 102
+2025-12-15 11:21:53,894 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 103
+2025-12-15 11:22:03,670 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 104
+2025-12-15 11:22:14,242 - src.graph.entity_extractor - INFO - Extracted 10 entities and 6 relationships from chunk 105
+2025-12-15 11:22:25,633 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 106
+2025-12-15 11:22:40,966 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 107
+2025-12-15 11:22:59,553 - src.graph.entity_extractor - INFO - Extracted 9 entities and 7 relationships from chunk 108
+2025-12-15 11:23:08,061 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 109
+2025-12-15 11:23:20,132 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 110
+2025-12-15 11:23:32,569 - src.graph.entity_extractor - INFO - Extracted 10 entities and 5 relationships from chunk 111
+2025-12-15 11:23:50,012 - src.graph.entity_extractor - INFO - Extracted 9 entities and 9 relationships from chunk 112
+2025-12-15 11:24:02,622 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 113
+2025-12-15 11:24:12,047 - src.graph.entity_extractor - INFO - Extracted 7 entities and 4 relationships from chunk 114
+2025-12-15 11:24:27,078 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 115
+2025-12-15 11:24:45,696 - src.graph.entity_extractor - INFO - Extracted 10 entities and 9 relationships from chunk 116
+2025-12-15 11:24:59,437 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 117
+2025-12-15 11:25:14,606 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 118
+2025-12-15 11:25:26,302 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 119
+2025-12-15 11:25:40,882 - src.graph.entity_extractor - INFO - Extracted 10 entities and 9 relationships from chunk 120
+2025-12-15 11:25:51,905 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 121
+2025-12-15 11:26:04,184 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 122
+2025-12-15 11:26:14,181 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 123
+2025-12-15 11:26:23,424 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 124
+2025-12-15 11:26:33,542 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 125
+2025-12-15 11:26:45,500 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 126
+2025-12-15 11:26:54,959 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 127
+2025-12-15 11:27:05,936 - src.graph.entity_extractor - INFO - Extracted 7 entities and 4 relationships from chunk 128
+2025-12-15 11:27:17,368 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 129
+2025-12-15 11:27:27,263 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 130
+2025-12-15 11:27:41,447 - src.graph.entity_extractor - INFO - Extracted 10 entities and 10 relationships from chunk 131
+2025-12-15 11:27:55,692 - src.graph.entity_extractor - INFO - Extracted 10 entities and 5 relationships from chunk 132
+2025-12-15 11:28:04,133 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 133
+2025-12-15 11:28:11,002 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 134
+2025-12-15 11:28:22,143 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 135
+2025-12-15 11:28:29,989 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 136
+2025-12-15 11:28:37,428 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 137
+2025-12-15 11:29:53,456 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 138
+2025-12-15 11:30:04,143 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 139
+2025-12-15 11:30:16,292 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 140
+2025-12-15 11:30:27,179 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 141
+2025-12-15 11:30:58,559 - src.graph.entity_extractor - INFO - Extracted 9 entities and 8 relationships from chunk 142
+2025-12-15 11:31:23,791 - src.graph.entity_extractor - INFO - Extracted 8 entities and 9 relationships from chunk 143
+2025-12-15 11:31:35,485 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 144
+2025-12-15 11:31:53,155 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 145
+2025-12-15 11:32:07,962 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 146
+2025-12-15 11:32:25,349 - src.graph.entity_extractor - INFO - Extracted 7 entities and 7 relationships from chunk 147
+2025-12-15 11:32:44,450 - src.graph.entity_extractor - INFO - Extracted 6 entities and 6 relationships from chunk 148
+2025-12-15 11:33:00,053 - src.graph.entity_extractor - INFO - Extracted 9 entities and 4 relationships from chunk 149
+2025-12-15 11:33:06,676 - src.graph.entity_extractor - INFO - Extracted 3 entities and 2 relationships from chunk 150
+2025-12-15 11:33:21,377 - src.graph.entity_extractor - INFO - Extracted 7 entities and 7 relationships from chunk 151
+2025-12-15 11:33:36,748 - src.graph.entity_extractor - INFO - Extracted 11 entities and 8 relationships from chunk 152
+2025-12-15 11:33:49,485 - src.graph.entity_extractor - INFO - Extracted 6 entities and 6 relationships from chunk 153
+2025-12-15 11:34:04,148 - src.graph.entity_extractor - INFO - Extracted 6 entities and 6 relationships from chunk 154
+2025-12-15 11:34:19,221 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 155
+2025-12-15 11:34:32,159 - src.graph.entity_extractor - INFO - Extracted 5 entities and 5 relationships from chunk 156
+2025-12-15 11:34:44,558 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 157
+2025-12-15 11:35:11,710 - src.graph.entity_extractor - INFO - Extracted 10 entities and 10 relationships from chunk 158
+2025-12-15 11:35:25,504 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 159
+2025-12-15 11:35:36,385 - src.graph.entity_extractor - INFO - Extracted 4 entities and 3 relationships from chunk 160
+2025-12-15 11:35:56,486 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 161
+2025-12-15 11:36:11,573 - src.graph.entity_extractor - INFO - Extracted 12 entities and 6 relationships from chunk 162
+2025-12-15 11:36:29,349 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 163
+2025-12-15 11:36:42,209 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 164
+2025-12-15 11:36:57,247 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 165
+2025-12-15 11:37:18,502 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 166
+2025-12-15 11:37:38,760 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 167
+2025-12-15 11:37:51,275 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 168
+2025-12-15 11:38:09,422 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 169
+2025-12-15 11:38:29,372 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 170
+2025-12-15 11:38:44,123 - src.graph.entity_extractor - INFO - Extracted 7 entities and 4 relationships from chunk 171
+2025-12-15 11:38:57,420 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 172
+2025-12-15 11:39:21,741 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 173
+2025-12-15 11:40:02,263 - src.graph.entity_extractor - INFO - Extracted 13 entities and 10 relationships from chunk 174
+2025-12-15 11:40:30,613 - src.graph.entity_extractor - INFO - Extracted 6 entities and 8 relationships from chunk 175
+2025-12-15 11:41:03,011 - src.graph.entity_extractor - INFO - Extracted 6 entities and 13 relationships from chunk 176
+2025-12-15 11:41:20,895 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 177
+2025-12-15 11:41:40,568 - src.graph.entity_extractor - INFO - Extracted 7 entities and 7 relationships from chunk 178
+2025-12-15 11:41:54,005 - src.graph.entity_extractor - INFO - Extracted 5 entities and 3 relationships from chunk 179
+2025-12-15 11:42:18,164 - src.graph.entity_extractor - INFO - Extracted 9 entities and 7 relationships from chunk 180
+2025-12-15 11:42:35,553 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 181
+2025-12-15 11:42:49,007 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 182
+2025-12-15 11:43:02,559 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 183
+2025-12-15 11:43:25,124 - src.graph.entity_extractor - INFO - Extracted 9 entities and 10 relationships from chunk 184
+2025-12-15 11:43:33,942 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 185
+2025-12-15 11:44:14,223 - src.graph.entity_extractor - INFO - Extracted 15 entities and 13 relationships from chunk 186
+2025-12-15 11:44:35,630 - src.graph.entity_extractor - INFO - Extracted 9 entities and 7 relationships from chunk 187
+2025-12-15 11:44:49,230 - src.graph.entity_extractor - INFO - Extracted 5 entities and 5 relationships from chunk 188
+2025-12-15 11:45:10,560 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 189
+2025-12-15 11:45:25,611 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 190
+2025-12-15 11:45:37,951 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 191
+2025-12-15 11:45:55,312 - src.graph.entity_extractor - INFO - Extracted 10 entities and 7 relationships from chunk 192
+2025-12-15 11:46:28,269 - src.graph.entity_extractor - INFO - Extracted 14 entities and 12 relationships from chunk 193
+2025-12-15 11:53:13,553 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 194
+2025-12-15 11:53:22,339 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 195
+2025-12-15 11:53:32,727 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 196
+2025-12-15 11:53:43,891 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 197
+2025-12-15 11:53:52,596 - src.graph.entity_extractor - INFO - Extracted 4 entities and 4 relationships from chunk 198
+2025-12-15 11:54:02,211 - src.graph.entity_extractor - INFO - Extracted 7 entities and 4 relationships from chunk 199
+2025-12-15 11:54:11,605 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 200
+2025-12-15 11:54:22,929 - src.graph.entity_extractor - INFO - Extracted 6 entities and 6 relationships from chunk 201
+2025-12-15 11:54:29,202 - src.graph.entity_extractor - INFO - Extracted 4 entities and 3 relationships from chunk 202
+2025-12-15 11:54:40,474 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 203
+2025-12-15 11:54:50,314 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 204
+2025-12-15 11:54:58,191 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 205
+2025-12-15 11:55:11,674 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 206
+2025-12-15 11:55:20,994 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 207
+2025-12-15 11:55:28,541 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 208
+2025-12-15 11:55:39,457 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 209
+2025-12-15 11:55:47,362 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 210
+2025-12-15 11:56:03,984 - src.graph.entity_extractor - INFO - Extracted 8 entities and 8 relationships from chunk 211
+2025-12-15 11:56:14,221 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 212
+2025-12-15 11:56:26,608 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 213
+2025-12-15 11:56:34,613 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 214
+2025-12-15 11:56:45,078 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 215
+2025-12-15 11:56:49,173 - src.graph.entity_extractor - INFO - Extracted 6 entities and 3 relationships from chunk 216
+2025-12-15 11:57:03,573 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 217
+2025-12-15 11:57:15,706 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 218
+2025-12-15 11:57:25,307 - src.graph.entity_extractor - INFO - Extracted 5 entities and 3 relationships from chunk 219
+2025-12-15 11:57:41,995 - src.graph.entity_extractor - INFO - Extracted 11 entities and 10 relationships from chunk 220
+2025-12-15 11:57:53,655 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 221
+2025-12-15 11:58:10,356 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 222
+2025-12-15 11:58:18,794 - src.graph.entity_extractor - INFO - Extracted 5 entities and 5 relationships from chunk 223
+2025-12-15 11:58:26,362 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 224
+2025-12-15 11:58:34,328 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 225
+2025-12-15 11:58:50,680 - src.graph.entity_extractor - INFO - Extracted 8 entities and 8 relationships from chunk 226
+2025-12-15 11:59:07,159 - src.graph.entity_extractor - INFO - Extracted 9 entities and 11 relationships from chunk 227
+2025-12-15 11:59:16,127 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 228
+2025-12-15 11:59:27,181 - src.graph.entity_extractor - INFO - Extracted 7 entities and 10 relationships from chunk 229
+2025-12-15 11:59:34,652 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 230
+2025-12-15 11:59:46,802 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 231
+2025-12-15 11:59:59,308 - src.graph.entity_extractor - INFO - Extracted 9 entities and 8 relationships from chunk 232
+2025-12-15 12:00:07,456 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 233
+2025-12-15 12:00:15,850 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 234
+2025-12-15 12:00:26,771 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 235
+2025-12-15 12:00:39,542 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 236
+2025-12-15 12:00:49,621 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 237
+2025-12-15 12:00:58,025 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 238
+2025-12-15 12:01:10,336 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 239
+2025-12-15 12:01:16,621 - src.graph.entity_extractor - INFO - Extracted 4 entities and 4 relationships from chunk 240
+2025-12-15 12:01:24,547 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 241
+2025-12-15 12:01:34,999 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 242
+2025-12-15 12:01:50,958 - src.graph.entity_extractor - INFO - Extracted 10 entities and 8 relationships from chunk 243
+2025-12-15 12:01:58,387 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 244
+2025-12-15 12:02:06,241 - src.graph.entity_extractor - INFO - Extracted 6 entities and 6 relationships from chunk 245
+2025-12-15 12:02:15,437 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 246
+2025-12-15 12:02:36,034 - src.graph.entity_extractor - INFO - Extracted 11 entities and 10 relationships from chunk 247
+2025-12-15 12:02:47,154 - src.graph.entity_extractor - INFO - Extracted 8 entities and 7 relationships from chunk 248
+2025-12-15 12:02:54,839 - src.graph.entity_extractor - INFO - Extracted 6 entities and 6 relationships from chunk 249
+2025-12-15 12:03:03,815 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 250
+2025-12-15 12:03:14,084 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 251
+2025-12-15 12:03:35,886 - src.graph.entity_extractor - INFO - Extracted 14 entities and 10 relationships from chunk 252
+2025-12-15 12:03:45,731 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 253
+2025-12-15 12:03:51,962 - src.graph.entity_extractor - INFO - Extracted 3 entities and 3 relationships from chunk 254
+2025-12-15 12:04:03,763 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 255
+2025-12-15 12:04:19,203 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 256
+2025-12-15 12:04:29,964 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 257
+2025-12-15 12:04:39,880 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 258
+2025-12-15 12:04:50,231 - src.graph.entity_extractor - INFO - Extracted 8 entities and 6 relationships from chunk 259
+2025-12-15 12:04:59,425 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 260
+2025-12-15 12:05:09,039 - src.graph.entity_extractor - INFO - Extracted 8 entities and 8 relationships from chunk 261
+2025-12-15 12:05:15,086 - src.graph.entity_extractor - INFO - Extracted 4 entities and 3 relationships from chunk 262
+2025-12-15 12:05:27,189 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 263
+2025-12-15 12:05:35,284 - src.graph.entity_extractor - INFO - Extracted 7 entities and 4 relationships from chunk 264
+2025-12-15 12:05:44,233 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 265
+2025-12-15 12:05:53,288 - src.graph.entity_extractor - INFO - Extracted 7 entities and 4 relationships from chunk 266
+2025-12-15 12:06:05,556 - src.graph.entity_extractor - INFO - Extracted 7 entities and 8 relationships from chunk 267
+2025-12-15 12:06:12,199 - src.graph.entity_extractor - INFO - Extracted 6 entities and 4 relationships from chunk 268
+2025-12-15 12:06:20,431 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 269
+2025-12-15 12:06:34,147 - src.graph.entity_extractor - INFO - Extracted 11 entities and 10 relationships from chunk 270
+2025-12-15 12:06:50,042 - src.graph.entity_extractor - INFO - Extracted 10 entities and 9 relationships from chunk 271
+2025-12-15 12:07:01,156 - src.graph.entity_extractor - INFO - Extracted 8 entities and 5 relationships from chunk 272
+2025-12-15 12:07:10,106 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 273
+2025-12-15 12:07:25,597 - src.graph.entity_extractor - INFO - Extracted 9 entities and 8 relationships from chunk 274
+2025-12-15 12:07:36,892 - src.graph.entity_extractor - INFO - Extracted 8 entities and 8 relationships from chunk 275
+2025-12-15 12:07:45,412 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 276
+2025-12-15 12:07:53,041 - src.graph.entity_extractor - INFO - Extracted 5 entities and 5 relationships from chunk 277
+2025-12-15 12:08:08,827 - src.graph.entity_extractor - INFO - Extracted 10 entities and 7 relationships from chunk 278
+2025-12-15 12:08:15,868 - src.graph.entity_extractor - INFO - Extracted 5 entities and 5 relationships from chunk 279
+2025-12-15 12:08:26,086 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 280
+2025-12-15 12:08:33,945 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 281
+2025-12-15 12:08:41,632 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 282
+2025-12-15 12:08:50,408 - src.graph.entity_extractor - INFO - Extracted 7 entities and 5 relationships from chunk 283
+2025-12-15 12:09:03,525 - src.graph.entity_extractor - INFO - Extracted 6 entities and 5 relationships from chunk 284
+2025-12-15 12:09:13,718 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 285
+2025-12-15 12:09:24,325 - src.graph.entity_extractor - INFO - Extracted 7 entities and 6 relationships from chunk 286
+2025-12-15 12:09:31,957 - src.graph.entity_extractor - INFO - Extracted 5 entities and 4 relationships from chunk 287
+2025-12-15 12:09:31,962 - src.graph.entity_extractor - INFO - Extracted total: 951 unique entities, 1624 relationships
+2025-12-15 12:09:31,965 - src.pipeline.ambedkargpt - INFO - Extracted 951 entities and 1624 relationships
+2025-12-15 12:09:32,033 - src.pipeline.ambedkargpt - INFO - Saved checkpoint: entities
+2025-12-15 12:09:32,039 - src.pipeline.ambedkargpt - INFO - Step 4: Graph Building
+2025-12-15 12:09:32,040 - src.graph.graph_builder - INFO - Building knowledge graph
+2025-12-15 12:09:32,052 - src.graph.graph_builder - INFO - Added 288 chunk nodes
+2025-12-15 12:09:32,058 - src.graph.graph_builder - INFO - Added 951 entity nodes
+2025-12-15 12:09:32,068 - src.graph.graph_builder - INFO - Added 2015 chunk-entity edges
+2025-12-15 12:09:33,668 - src.graph.graph_builder - INFO - Added 69029 entity relationship edges
+2025-12-15 12:09:33,670 - src.graph.graph_builder - INFO - Graph built: 1239 nodes, 23468 edges
+2025-12-15 12:09:34,307 - src.graph.graph_builder - INFO - Graph saved to ./data/processed/graph.json
+2025-12-15 12:09:34,309 - src.pipeline.ambedkargpt - INFO - Saved checkpoint: graph
+2025-12-15 12:09:34,310 - src.pipeline.ambedkargpt - INFO - Step 5: Community Detection
+2025-12-15 12:09:34,311 - src.graph.community_detector - INFO - Detecting communities using leiden algorithm
+
+❌ Error: ModularityVertexPartition.__init__() got an unexpected keyword argument 'resolution_parameter'
+Traceback (most recent call last):
+  File "D:\AI\SemRAG\ambedkargpt\example.py", line 143, in <module>
+    main()
+  File "D:\AI\SemRAG\ambedkargpt\example.py", line 30, in main
+    rag_system.process_document(pdf_path="data/Ambedkar_book.pdf")
+  File "D:\AI\SemRAG\ambedkargpt\src\pipeline\ambedkargpt.py", line 225, in process_document
+    communities_raw = self.community_detector.detect_communities(self.graph)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AI\SemRAG\ambedkargpt\src\graph\community_detector.py", line 57, in detect_communities
+    communities = self._detect_leiden(graph)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AI\SemRAG\ambedkargpt\src\graph\community_detector.py", line 92, in _detect_leiden
+    partition = leidenalg.find_partition(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\AI\SemRAG\ambedkargpt\venv\Lib\site-packages\leidenalg\functions.py", line 81, in find_partition
+    partition = partition_type(graph,
+                ^^^^^^^^^^^^^^^^^^^^^
+TypeError: ModularityVertexPartition.__init__() got an unexpected keyword argument 'resolution_parameter'
+(venv) PS D:\AI\SemRAG\ambedkargpt> python example.py
+Initializing AmbedkarGPT...
+2025-12-15 12:13:04,613 - src.pipeline.ambedkargpt - INFO - Initializing AmbedkarGPT pipeline
+
+Loading previously processed data...
+2025-12-15 12:13:04,785 - src.pipeline.ambedkargpt - INFO - Loading processed data
+⚠️  Processed data invalid or missing (Required processed file missing: data\proccessed\communities.json); reprocessing document...
+
+2025-12-15 12:13:04,785 - src.pipeline.ambedkargpt - INFO - Starting document processing pipeline (with checkpoints)
+2025-12-15 12:13:04,785 - src.pipeline.ambedkargpt - INFO - Loading PDF: data/Ambedkar_book.pdf
+2025-12-15 12:13:05,047 - src.pipeline.ambedkargpt - INFO - Extracted 263454 characters from PDF
+2025-12-15 12:13:05,055 - src.pipeline.ambedkargpt - INFO - Checkpoint found: chunks -> loading from disk
+2025-12-15 12:13:05,059 - src.pipeline.ambedkargpt - INFO - Loaded 288 chunks from checkpoint
+2025-12-15 12:13:05,059 - src.pipeline.ambedkargpt - INFO - Checkpoint found: entities -> loading from disk
+2025-12-15 12:13:05,065 - src.pipeline.ambedkargpt - INFO - Loaded 951 entities and 1624 relationships
+2025-12-15 12:13:05,065 - src.pipeline.ambedkargpt - INFO - Checkpoint found: graph -> loading from disk
+2025-12-15 12:13:05,154 - src.graph.graph_builder - INFO - Graph loaded from ./data/processed/graph.json
+2025-12-15 12:13:05,157 - src.pipeline.ambedkargpt - INFO - Step 5: Community Detection
+2025-12-15 12:13:05,157 - src.graph.community_detector - INFO - Detecting communities using leiden algorithm
+2025-12-15 12:13:05,178 - src.graph.community_detector - INFO - Detected 11 communities (min size: 2)
+2025-12-15 12:13:05,178 - src.pipeline.ambedkargpt - INFO - Saved checkpoint: communities
+2025-12-15 12:13:05,180 - src.pipeline.ambedkargpt - INFO - Step 6: Summarization
+2025-12-15 12:13:05,180 - src.graph.summarizer - INFO - Generating summaries for 288 chunks
+
+
+Interrupted by user. Goodbye!
+(venv) PS D:\AI\SemRAG\ambedkargpt> python example.py
+Initializing AmbedkarGPT...
+2025-12-15 12:18:52,661 - src.pipeline.ambedkargpt - INFO - Initializing AmbedkarGPT pipeline
+
+Loading previously processed data...
+2025-12-15 12:18:52,828 - src.pipeline.ambedkargpt - INFO - Loading processed data
+⚠️  Processed data invalid or missing (Required processed file missing: data\proccessed\summaries.json); reprocessing document...
+
+2025-12-15 12:18:52,828 - src.pipeline.ambedkargpt - INFO - Starting document processing pipeline (with checkpoints)
+2025-12-15 12:18:52,828 - src.pipeline.ambedkargpt - INFO - Loading PDF: data/Ambedkar_book.pdf
+2025-12-15 12:18:53,098 - src.pipeline.ambedkargpt - INFO - Extracted 263454 characters from PDF
+2025-12-15 12:18:53,098 - src.pipeline.ambedkargpt - INFO - Checkpoint found: chunks -> loading from disk
+2025-12-15 12:18:53,114 - src.pipeline.ambedkargpt - INFO - Loaded 288 chunks from checkpoint
+2025-12-15 12:18:53,114 - src.pipeline.ambedkargpt - INFO - Checkpoint found: entities -> loading from disk
+2025-12-15 12:18:53,121 - src.pipeline.ambedkargpt - INFO - Loaded 951 entities and 1624 relationships
+2025-12-15 12:18:53,121 - src.pipeline.ambedkargpt - INFO - Checkpoint found: graph -> loading from disk
+2025-12-15 12:18:53,219 - src.graph.graph_builder - INFO - Graph loaded from ./data/processed/graph.json
+2025-12-15 12:18:53,221 - src.pipeline.ambedkargpt - INFO - Checkpoint found: communities -> loading from disk
+2025-12-15 12:18:53,242 - src.pipeline.ambedkargpt - INFO - Step 6: Summarization
+2025-12-15 12:18:53,242 - src.graph.summarizer - INFO - Generating summaries for 288 chunks
+
+
+Interrupted by user. Goodbye!
+(venv) PS D:\AI\SemRAG\ambedkargpt> python example.py
+Initializing AmbedkarGPT...
+2025-12-15 12:23:22,021 - src.pipeline.ambedkargpt - INFO - Initializing AmbedkarGPT pipeline
+
+Loading previously processed data...
+2025-12-15 12:23:22,199 - src.pipeline.ambedkargpt - INFO - Loading processed data
+⚠️  Processed data invalid or missing (Required processed file missing: data\proccessed\summaries.json); reprocessing document...
+
+2025-12-15 12:23:22,200 - src.pipeline.ambedkargpt - INFO - Starting document processing pipeline (with checkpoints)
+2025-12-15 12:23:22,201 - src.pipeline.ambedkargpt - INFO - Loading PDF: data/Ambedkar_book.pdf
+2025-12-15 12:23:22,442 - src.pipeline.ambedkargpt - INFO - Extracted 263454 characters from PDF
+2025-12-15 12:23:22,442 - src.pipeline.ambedkargpt - INFO - Checkpoint found: chunks -> loading from disk
+2025-12-15 12:23:22,458 - src.pipeline.ambedkargpt - INFO - Loaded 288 chunks from checkpoint
+2025-12-15 12:23:22,458 - src.pipeline.ambedkargpt - INFO - Checkpoint found: entities -> loading from disk
+2025-12-15 12:23:22,468 - src.pipeline.ambedkargpt - INFO - Loaded 951 entities and 1624 relationships
+2025-12-15 12:23:22,468 - src.pipeline.ambedkargpt - INFO - Checkpoint found: graph -> loading from disk
+2025-12-15 12:23:22,559 - src.graph.graph_builder - INFO - Graph loaded from ./data/processed/graph.json
+2025-12-15 12:23:22,562 - src.pipeline.ambedkargpt - INFO - Checkpoint found: communities -> loading from disk
+2025-12-15 12:23:22,562 - src.pipeline.ambedkargpt - INFO - Step 6: Summarization
+2025-12-15 12:23:22,562 - src.graph.summarizer - INFO - Generating summaries for 288 chunks
+Summarizing chunks: 100%|██████████████████| 288/288 [12:54<00:00,  2.69s/chunk] 
+2025-12-15 12:36:17,231 - src.graph.summarizer - INFO - Generating summaries for 11 communities
+Summarizing communities: 100%|███████████| 11/11 [00:56<00:00,  5.10s/community] 
+2025-12-15 12:37:13,292 - src.graph.summarizer - INFO - Generated 11 community summaries
+2025-12-15 12:37:13,298 - src.pipeline.ambedkargpt - INFO - Saved checkpoint: summaries
+2025-12-15 12:37:13,298 - src.pipeline.ambedkargpt - INFO - Step 7: Initializing Retrieval Components
+2025-12-15 12:37:13,298 - src.retrieval.local_search - INFO - Computing embeddings for 288 chunks
+Embedding chunks: 100%|████████████████████| 288/288 [02:38<00:00,  1.82chunk/s] 
+2025-12-15 12:39:51,918 - src.retrieval.global_search - INFO - Computing embeddings for 11 communities
+2025-12-15 12:39:58,624 - src.pipeline.ambedkargpt - INFO - Document processing complete (checkpoints written)
+
+✓ Document reprocessed successfully!
+Processed data saved to data/processed/
+
+================================================================================ 
+EXAMPLE QUERIES
+================================================================================ 
+
+──────────────────────────────────────────────────────────────────────────────── 
+Question 1: What were Dr. Ambedkar's views on social justice?
+Search Type: LOCAL SEARCH (Entity-based) - Best for specific details
+──────────────────────────────────────────────────────────────────────────────── 
+2025-12-15 12:39:58,629 - src.pipeline.ambedkargpt - INFO - Processing query: What were Dr. Ambedkar's views on social justice?
+2025-12-15 12:39:58,629 - src.retrieval.local_search - INFO - Performing local search for query: What were Dr. Ambedkar's views on social justice?
+2025-12-15 13:11:07,119 - src.retrieval.local_search - INFO - Found 10 relevant entities
+2025-12-15 13:11:07,127 - src.retrieval.local_search - INFO - Found 233 candidate chunks
+2025-12-15 13:11:07,584 - src.llm.answer_generator - INFO - Generating local search answer for: What were Dr. Ambedkar's views on social justice?
+2025-12-15 13:11:14,929 - src.pipeline.ambedkargpt - INFO - Query processing complete
+
+Answer:
+Dr. B.R. Ambedkar's views on social justice were deeply intertwined with his criticisms of the caste system and his quest for equality within the Hindu social order. He recognized that the caste system was a fundamental barrier to social justice and sought to address it through radical reform.
+
+In his works, Ambedkar argued that the essence of Hinduism, as defined by its scriptures, inherently supported the social hierarchy established by the caste system. He posed a critical question about the validity of one's faith if it condoned practices like untouchability and caste discrimination. He stated, “If Caste and Varna are convertible terms and if Varna is an integral part of the Shastras which define Hinduism, I do not know how a person who rejects Caste, i.e., Varna can call himself a Hindu.” This encapsulates his view that true social justice cannot be achieved as long as the caste system is upheld by religious texts that define Hinduism.
+
+Ambedkar also emphasized the need for reforming the Hindu social order to abolish caste entirely, stating, "The only question that remains to be considered is—How to bring about the reform of the Hindu social order? How to abolish caste?" He believed that any reform must start with a thorough re-examination and potentially the rejection of the scriptures that support caste discrimination. He asserted that if the Shastras supported untouchability and the existing caste system, he would no longer identify as Hindu.
+
+His perspective was not merely about the rejection of caste but also about the broader implications for social justice. He sought a society where individuals could inter-dine and inter-marry without the restrictions imposed by caste, viewing these practices as essential for social equality and justice.
+
+In summary, Dr. Ambedkar's views on social justice were characterized by a strong critique of the caste system, a call for its abolition through reform of the Hindu social order, and a belief that true justice requires the rejection of any religious or social structure that perpetuates inequality and discrimination.       
+
+Sources used: 5 chunks
+Entities referenced: Dr. Babasaheb Ambedkar, Caste, Dr. Ambedkar, caste system, India
+
+──────────────────────────────────────────────────────────────────────────────── 
+Question 2: What were the main themes in Ambedkar's philosophy?
+Search Type: GLOBAL SEARCH (Community-based) - Best for broad themes
+──────────────────────────────────────────────────────────────────────────────── 
+2025-12-15 13:11:14,932 - src.pipeline.ambedkargpt - INFO - Processing query: What were the main themes in Ambedkar's philosophy?
+2025-12-15 13:11:14,932 - src.retrieval.global_search - INFO - Performing global search for query: What were the main themes in Ambedkar's philosophy?
+2025-12-15 13:11:15,480 - src.llm.answer_generator - INFO - Generating global search answer for: What were the main themes in Ambedkar's philosophy?
+2025-12-15 13:11:28,030 - src.pipeline.ambedkargpt - INFO - Query processing complete
+
+Answer:
+Dr. B.R. Ambedkar, a pivotal figure in the struggle against the caste system in India, articulated a philosophy that revolves around several key themes, primarily focusing on the critique and deconstruction of caste as a social institution. His work, particularly "Annihilation of Caste," serves as a foundational text in understanding the complexities and implications of caste within Indian society.    
+
+### 1. Critique of the Caste System
+One of the central themes in Ambedkar's philosophy is the critical examination of the caste system, which he viewed as a systemic and deeply entrenched social hierarchy rather than a divinely ordained structure. He argued that caste is not merely a social classification but a mechanism that perpetuates inequality and discrimination. This critique encompasses an analysis of the rigid social divisions that categorize individuals into hierarchies, such as Brahmins, Kshatriyas, Vaishyas, Shudras, and various marginalized groups, including Untouchables and Harijans.
+
+### 2. Historical Context and Mechanisms
+Ambedkar explored the historical origins and mechanisms that sustain the caste system. He highlighted practices such as endogamy and exogamy, which reinforce social boundaries and maintain caste distinctions. His analysis extended to the socio-cultural dynamics that have evolved over time, illustrating how these divisions reflect broader historical narratives and societal norms. For Ambedkar, understanding these mechanisms is crucial for any meaningful social reform aimed at dismantling the caste system.
+
+### 3. Advocacy for Social Reform
+A significant aspect of Ambedkar's philosophy is his call for social reform and the annihilation of caste. He argued that true equality cannot be achieved unless the social structures supporting caste distinctions are dismantled. Ambedkar advocated for a radical transformation of society, emphasizing the need for legal and constitutional measures to ensure social justice and equality. His vision included the empowerment of marginalized communities and the establishment of a democratic framework that recognizes and protects their rights.
+
+### 4. Interplay of Caste and Identity
+Ambedkar also addressed the intricate relationship between caste and identity, noting how rigid social divisions can shape individual and collective identities within the Indian context. He recognized that the struggle against caste is not only a fight for social justice but also a quest for self-identity and dignity among oppressed communities. This perspective underscores the emotional and psychological dimensions of caste, which have profound implications for social cohesion and national unity.
+
+### 5. Ethnological and Philosophical Insights
+Ambedkar's approach incorporates ethnological insights, using objective analysis to dissect the complexities of caste. He engaged with various scholarly perspectives, drawing from anthropology and sociology to deepen the understanding of caste as a dynamic institution influenced by historical, cultural, and economic factors. This multifaceted analysis demonstrates the need for a critical examination of social institutions to promote equality and reform.
+
+### Conclusion
+In summary, Dr. B.R. Ambedkar’s philosophy is characterized by a profound critique of the caste system, an exploration of its historical mechanisms, and a passionate advocacy for social reform. His insights into the interplay of caste and identity, along with his commitment to understanding the complexities of social institutions, position him as a transformative thinker whose ideas continue to resonate in contemporary discussions on social justice and equality in India. Ambedkar's legacy remains a vital part of the ongoing struggle to dismantle caste-based discrimination and promote a more equitable society.
+
+
+────────────────────────────────────────────────────────────────────────────────
+Question 3: How did Ambedkar's personal experiences influence his political work?
+Search Type: HYBRID SEARCH (Combined) - Best for complex questions
+────────────────────────────────────────────────────────────────────────────────
+2025-12-15 13:11:28,030 - src.pipeline.ambedkargpt - INFO - Processing query: How did Ambedkar's personal experiences influence his political work?
+2025-12-15 13:11:28,030 - src.retrieval.local_search - INFO - Performing local search for query: How did Ambedkar's personal experiences influence his political work?
+
+
+
+
+
+
+
+
+
+
+
+────────────────────────────────────────────────────────────────────────────────
+
+────────────────────────────────────────────────────────────────────────────────
+Question 3: How did Ambedkar's personal experiences influence his political work?
+Search Type: HYBRID SEARCH (Combined) - Best for complex questions
+2025-12-15 13:11:28,030 - src.pipeline.ambedkargpt - INFO - Processing query: How did Ambedkar's personal experiences infl2025-12-15 13:11:28,030 - src.pipeline.amntities
+2025-12-15 13:19:17,855 - src.retrieval.local_search - INFO - Found 236 candidate chunks
+2025-12-15 13:19:18,531 - src.retrieval.global_search - INFO - Performing global search for query: How did Ambedkar's personal experiences influence his political work?
+2025-12-15 13:19:18,968 - src.retrieval.ranker - INFO - Performing hybrid search
+2025-12-15 13:19:18,968 - src.retrieval.ranker - INFO - Combining local and global search results
+2025-12-15 13:19:18,968 - src.retrieval.ranker - INFO - Re-ranking 2 chunks
+2025-12-15 13:19:20,691 - src.llm.answer_generator - INFO - Generating hybrid search answer for: How did Ambedkar's personal experiences influence his political work?
+2025-12-15 13:19:29,723 - src.pipeline.ambedkargpt - INFO - Query processing complete
+
+Answer:
+Dr. B.R. Ambedkar’s personal experiences profoundly shaped his political work, particularly in his critique of the caste system and the quest for social justice in India. Born into a socially marginalized community as a Dalit (previously referred to as "untouchables"), Ambedkar faced systemic discrimination from an early age. This early exposure to the harsh realities of caste prejudice and social exclusion informed his understanding of the need for radical reform within Indian society.
+
+In his seminal work "Annihilation of Caste," Ambedkar articulates a scathing critique of the caste system, arguing that it is a deeply entrenched social institution that perpetuates inequality and injustice. His experiences of humiliation and oppression as a member of a marginalized group led him to challenge the legitimacy of Hindu scriptures and the socio-religious structures that uphold caste distinctions. In the context of his critiques, he raises critical questions about the nature of Hindu scriptures and their interpretations, suggesting that many texts have been manipulated to justify caste-based discrimination (as noted in the reflections on scripture in the provided chunks).
+
+Ambedkar's political philosophy was also informed by his education and exposure to Western democratic ideals. He studied at prestigious institutions such as Columbia University and the London School of Economics, where he engaged with concepts of liberty, equality, and fraternity—principles that would later underpin his vision for a just society. This blend of personal experience and academic rigor positioned him as a formidable advocate for the rights of the oppressed. He emphasized that reform must come from a comprehensive understanding of the caste system's systemic nature rather than merely addressing its manifestations.
+
+Moreover, Ambedkar's interactions with various social and political movements in India further influenced his approach. He recognized the need for a collective identity among the oppressed and worked to unite various marginalized groups against the oppressive structures of caste society. His political activism was not just a response to personal grievances but a broader struggle for social justice.
+
+The broader themes emerging from his work reflect a critical analysis of social institutions and the importance of reexamining historical narratives around caste. As indicated in the summaries, Ambedkar’s contributions extend beyond mere critique; they advocate for a systemic transformation of society. His emphasis on ethnological and anthropological approaches to understanding caste demonstrates his insistence on grounding reforms in a comprehensive analysis of social structures rather than relying solely on traditional interpretations.
+
+In conclusion, Dr. B.R. Ambedkar’s personal experiences of caste discrimination and his extensive academic background uniquely positioned him to challenge the status quo of Indian society. His political work, characterized by a rigorous critique of the caste system and an advocacy for social justice, continues to resonate today as a call for equality and reform in the face of enduring systemic inequalities.
+
+Sources used: 0 chunks
+Entities referenced: Dr. Babasaheb Ambedkar, Caste, Dr. Ambedkar, India, caste system
+Your question: What role did Ambedkar play in drafting the Indian Constitution?
+Search type: [1] Local (specific), [2] Global (broad), [3] Hybrid (default)
+Search type: [1] Local (specific), [2] Global (broad), [3] Hybrid (default)
+Choose (1/2/3 or press Enter for hybrid):
+Choose (1/2/3 or press Enter for hybrid):
+
+
+Searching (hybrid)...
+2025-12-15 13:20:47,491 - src.pipeline.ambedkargpt - INFO - Processing query: What role did Ambedkar play in drafting the Indian Constitution?
+2025-12-15 13:20:47,491 - src.retrieval.local_search - INFO - Performing local search for query: What role did Ambedkar play in drafting the Indian Constitution?
+2025-12-15 13:28:08,518 - src.retrieval.local_search - INFO - Found 10 relevant entities
+2025-12-15 13:28:08,525 - src.retrieval.local_search - INFO - Found 235 candidate chunks
+2025-12-15 13:28:08,955 - src.retrieval.global_search - INFO - Performing global search for query: What role did Ambedkar play in drafting the Indian Constitution?
+2025-12-15 13:28:09,329 - src.retrieval.ranker - INFO - Performing hybrid search
+2025-12-15 13:28:09,331 - src.retrieval.ranker - INFO - Combining local and global search results
+2025-12-15 13:28:09,331 - src.retrieval.ranker - INFO - Re-ranking 2 chunks
+2025-12-15 13:28:10,705 - src.llm.answer_generator - INFO - Generating hybrid search answer for: What role did Ambedkar play in drafting the Indian Constitution?
+2025-12-15 13:28:25,038 - src.pipeline.ambedkargpt - INFO - Query processing complete
+
+--------------------------------------------------------------------------------
+Answer:
+Dr. B.R. Ambedkar played a pivotal role in drafting the Indian Constitution, serving as the Chairman of the Drafting Committee from 1947 to 1950. His leadership was instrumental in shaping a document that sought to address the profound injustices of the Indian caste system and promote social equality. Ambedkar's vision was deeply rooted in his critique of social institutions, particularly the caste system, which he viewed as a systemic issue rather than a divinely ordained structure. 
+
+Ambedkar's approach to the Constitution was informed by his extensive studies and critiques of Indian society, especially articulated in his seminal work, "Annihilation of Caste." In this work, he examined the complexities of caste, emphasizing the need for reform and advocating for a society built on principles of equality, liberty, and fraternity. His insistence on social justice and the elimination of untouchability was reflected in the Constitution’s provisions, which abolished discrimination based on caste and established affirmative action policies aimed at uplifting marginalized communities.     
+
+In the drafting process, Ambedkar was deeply engaged in discussions about fundamental rights and liberties. He argued that the Constitution should guarantee not only civil liberties but also socio-economic rights essential for fostering equality. His commitment to these principles was influenced by his personal experiences as a member of the Dalit community, which faced systemic discrimination and social exclusion. This background underpinned his advocacy for a legal framework that would empower the oppressed and challenge the status quo.
+
+The debates around caste and social structures that Ambedkar highlighted in his writings were echoed in the broader themes of the Constitution. For instance, the emphasis on social justice reflects his understanding of caste as a complex system that required not just legal remedies but a fundamental transformation of societal values. His efforts in the Constituent Assembly aimed to create a legal foundation that would not only recognize the rights of the marginalized but also challenge the entrenched social hierarchies that perpetuated inequality.
+
+In summary, Dr. B.R. Ambedkar's role in drafting the Indian Constitution was not merely that of a legal architect; he was a visionary who sought to reshape Indian society. His emphasis on social equity, justice, and the dismantling of the caste system was integral to the Constitution's framework, making it a revolutionary document aimed at fostering a more inclusive and egalitarian India. His legacy continues to resonate in contemporary discussions about caste, social justice, and human rights in India.
+
+Sources: 0 chunks
+Key entities: Dr. Babasaheb Ambedkar, Caste, Dr. Ambedkar, India, caste system
+--------------------------------------------------------------------------------

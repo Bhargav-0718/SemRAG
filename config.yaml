@@ -1,0 +1,123 @@
+# SemRAG Configuration File
+# Based on the SemRAG research paper implementation
+
+# LLM Configuration
+llm:
+  provider: "openai"  # Options: openai, anthropic, ollama
+  model: "gpt-4o-mini"
+  api_key: "${OPENAI_API_KEY}"  # Set via environment variable
+  temperature: 0.7
+  max_tokens: 4096
+  
+# Embedding Configuration
+embeddings:
+  provider: "openai"  # Options: openai, sentence-transformers
+  model: "text-embedding-ada-002"
+  api_key: "${OPENAI_API_KEY}"
+  dimension: 1536
+  
+# Semantic Chunking Configuration
+chunking:
+  method: "semantic"  # semantic chunking with embeddings
+  similarity_threshold: 0.7  # Cosine similarity threshold for semantic boundaries
+  buffer_size: 1  # Number of sentences to include as context (0, 1, 3, 5)
+  min_chunk_size: 100  # Minimum characters per chunk
+  max_chunk_size: 1000  # Maximum characters per chunk
+  use_nltk_tokenizer: true
+  
+# Entity Extraction Configuration
+entity_extraction:
+  method: "llm"  # Use LLM for entity extraction
+  entity_types:
+    - "PERSON"
+    - "ORGANIZATION"
+    - "LOCATION"
+    - "EVENT"
+    - "CONCEPT"
+    - "DATE"
+  extract_relationships: true
+  max_entities_per_chunk: 20
+  
+# Graph Building Configuration
+graph:
+  node_types:
+    - "entity"
+    - "chunk"
+    - "community"
+  edge_types:
+    - "mentions"  # chunk -> entity
+    - "relates_to"  # entity -> entity
+    - "part_of"  # chunk -> community
+  weight_threshold: 0.5
+  
+# Community Detection Configuration
+community_detection:
+  algorithm: "leiden"  # Options: leiden, louvain
+  resolution: 1.0
+  min_community_size: 2
+  max_community_size: 50
+  
+# Summarization Configuration
+summarization:
+  chunk_summary: true
+  community_summary: true
+  summary_style: "concise"  # Options: concise, detailed
+  max_summary_length: 500
+  progress_bar: true
+  
+# Retrieval Configuration
+retrieval:
+  # Local Search (Entity-based)
+  local_search:
+    enabled: true
+    top_k_entities: 10
+    top_k_chunks: 5
+    similarity_weight: 0.6
+    graph_weight: 0.4
+    progress_bar: true
+    
+  # Global Search (Community-based)
+  global_search:
+    enabled: true
+    top_k_communities: 5
+    use_community_summaries: true
+    
+  # Hybrid approach
+  hybrid:
+    enabled: true
+    local_weight: 0.5
+    global_weight: 0.5
+    
+# Ranking Configuration
+ranking:
+  method: "hybrid"  # Options: semantic, graph, hybrid
+  rerank: true
+  rerank_model: "cross-encoder"
+  top_k_final: 5
+  
+# Vector Store Configuration
+vector_store:
+  type: "faiss"  # Options: faiss, chromadb, pinecone
+  index_type: "flat"  # Options: flat, ivf, hnsw
+  save_path: "./data/vector_store"
+  
+# Graph Store Configuration
+graph_store:
+  type: "networkx"  # Options: networkx, neo4j
+  save_path: "./data/graph_store"
+  persist: true
+  
+# Data Paths
+data:
+  input_pdf: "./data/Ambedkar_book.pdf"
+  processed_chunks: "./data/processed/chunks.json"
+  entities: "./data/processed/entities.json"
+  graph: "./data/processed/graph.json"
+  communities: "./data/processed/communities.json"
+  summaries: "./data/processed/summaries.json"
+  
+# Logging Configuration
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  file: "./logs/ambedkargpt.log"
+  console: true

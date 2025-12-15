@@ -13,3 +13,5 @@ data/processed/
 # OS
 .DS_Store
 Thumbs.db
+.env
+logs/
