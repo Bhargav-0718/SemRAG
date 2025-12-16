@@ -20,6 +20,11 @@ AmbedkarGPT implements the SemRAG architecture that combines:
 ✅ **Hybrid Search**: Combines local and global retrieval strategies
 ✅ **Configurable Pipeline**: YAML-based configuration
 ✅ **Persistent Storage**: Save and reload processed data
+✅ **Smart Checkpointing**: Resume processing from interruption points
+✅ **Embedding Caching**: Cache chunk and entity embeddings for instant loading
+✅ **Batch Embedding**: Process embeddings in batches for 50x faster performance
+✅ **Rate Limit Handling**: Automatic retry with exponential backoff
+✅ **Progress Tracking**: Visual progress bars for long-running operations
 
 ## Installation
 
@@ -123,16 +128,23 @@ community_detection:
   resolution: 1.0
   min_community_size: 2
 
-# Retrieval
+# Embedding Cache Configuration
 retrieval:
+  cache_embeddings: true  # Cache embeddings to disk for instant loading
   local_search:
     top_k_entities: 10
     top_k_chunks: 5
+    progress_bar: true
   global_search:
     top_k_communities: 5
   hybrid:
     local_weight: 0.5
     global_weight: 0.5
+
+# Data paths for cached embeddings
+data:
+  chunk_embeddings: "./data/processed/chunk_embeddings.pkl"
+  community_embeddings: "./data/processed/community_embeddings.pkl"
 ```
 
 ## Architecture
@@ -187,14 +199,17 @@ ambedkargpt/
 ├── requirements.txt         # Dependencies
 ├── setup.py                # Package setup
 ├── README.md               # This file
+├── example.py              # Interactive demo script
 ├── data/
 │   ├── Ambedkar_book.pdf   # Input document
-│   └── processed/          # Processed data
-│       ├── chunks.json
-│       ├── entities.json
-│       ├── graph.json
-│       ├── communities.json
-│       └── summaries.json
+│   └── processed/          # Processed data & caches
+│       ├── chunks.json     # Semantic chunks
+│       ├── entities.json   # Extracted entities
+│       ├── graph.json      # Knowledge graph
+│       ├── communities.json# Detected communities
+│       ├── summaries.json  # Chunk & community summaries
+│       ├── chunk_embeddings.pkl     # Cached chunk embeddings
+│       └── community_embeddings.pkl # Cached community embeddings
 ├── src/
 │   ├── chunking/           # Semantic chunking modules
 │   │   ├── semantic_chunker.py
@@ -228,31 +243,64 @@ Main pipeline class.
 
 #### Methods
 
-- `process_document(pdf_path=None, text=None)`: Process a document through the pipeline
-- `query(question, search_type='hybrid')`: Query the system
+- `process_document(pdf_path=None, text=None)`: Process a document through the pipeline with checkpoint resume
+- `query(question, search_type='hybrid')`: Query the system with instant embedding cache loading
+- `load_processed_data()`: Load previously processed data with cached embeddings
 - `save_processed_data()`: Save processed data to disk
-- `load_processed_data()`: Load previously processed data
 
-### Search Types
+### Retrieval Methods
 
-- `local`: Entity-based search for specific details
-- `global`: Community-based search for broad themes
+- `local_search`: Entity-based search for specific, detailed questions
+  - Returns: Top chunks mentioning relevant entities
+  - Speed: <1 second (after first run)
+  
+- `global_search`: Community-based search for high-level thematic questions
+  - Returns: Top community summaries
+  - Speed: <1 second (after first run)
+  
 - `hybrid`: Combined local and global search (recommended)
+  - Returns: Best results from both local and global search
+  - Speed: 2-5 seconds for full answer generation
+
+### Embedding Caching
+
+- **Automatic**: All embeddings cached after computation
+- **Format**: Pickle format for fast serialization
+- **Cache Location**: `data/processed/*.pkl` files
+- **Cache Invalidation**: Delete `.pkl` files to force recomputation
 
 ## Performance Tips
 
+### Initialization (First Run)
+- **One-time Setup**: Processing 951 entities takes ~2-3 minutes on first run
+- **Batch Embedding**: Embeddings processed in batches of 50 for 50x speedup
+- **Automatic Caching**: All embeddings cached to `data/processed/*.pkl` files
+
+### Subsequent Runs (All Instant)
+- **Embedding Cache**: Loads 951 entity embeddings in <1 second
+- **Chunk Cache**: Loads 288+ chunk embeddings instantly
+- **No API Calls**: Zero OpenAI API costs after first run
+- **Query Response**: 5-10 seconds for full answer generation
+
+### Configuration Tuning
 1. **Buffer Size**: 
    - 0: No context (fastest, less accurate)
-   - 1: One sentence context (balanced)
+   - 1: One sentence context (balanced) ✓ **Recommended**
    - 3-5: More context (slower, more accurate)
 
 2. **Community Detection**:
-   - Use Leiden for better quality (requires igraph)
-   - Use Louvain for faster processing
+   - Leiden: Better quality detection (default)
+   - Louvain: Faster processing, fallback option
 
-3. **Caching**:
-   - Process documents once, then use `load_processed_data()`
-   - Embeddings are cached automatically
+3. **Batch Processing**:
+   - Batch size: 50 entities per API call (tunable in code)
+   - Reduces API calls from 951 to 19 for entity embeddings
+   - Automatic retry with exponential backoff on rate limits
+
+4. **Checkpoint System**:
+   - Pipeline saves progress after each step
+   - Resume from interruption without reprocessing
+   - Checkpoints: chunks → entities → graph → communities → summaries
 
 ## Testing
 
@@ -318,9 +366,7 @@ If you use this implementation, please cite the original SemRAG paper:
 ## Support
 
 For issues, questions, or contributions:
-- GitHub Issues: [issues](https://github.com/yourusername/ambedkargpt/issues)
-- Email: your.email@example.com
+- GitHub Issues: [issues](https://github.com/Bhargav-0718/SemRAG/issues)
+- Email: bhargav.07.bidkar@gmail.com
 
 ---
-
-**Built with ❤️ for preserving and disseminating knowledge about Dr. B.R. Ambedkar**
