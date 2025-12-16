@@ -1,9 +1,3 @@
-"""Buffer merger module for adding context to semantic chunks.
-
-Implements the buffer merging strategy from the SemRAG paper,
-which adds surrounding sentences to chunks for better context.
-"""
-
 from typing import List, Dict, Any
 import logging
 

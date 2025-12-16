@@ -67,6 +67,9 @@ summarization:
   
 # Retrieval Configuration
 retrieval:
+  # Embedding cache configuration
+  cache_embeddings: true  # Cache embeddings to disk to avoid recomputation
+  
   # Local Search (Entity-based)
   local_search:
     enabled: true
@@ -115,6 +118,8 @@ data:
   graph: "./data/processed/graph.json"
   communities: "./data/processed/communities.json"
   summaries: "./data/processed/summaries.json"
+  chunk_embeddings: "./data/processed/chunk_embeddings.pkl"
+  community_embeddings: "./data/processed/community_embeddings.pkl"
   
 # Logging Configuration
 logging:

@@ -1,9 +1,3 @@
-"""Semantic chunking module using embedding-based similarity.
-
-Implements the SemRAG semantic chunking algorithm that splits text
-into chunks based on semantic similarity between consecutive sentences.
-"""
-
 import nltk
 from typing import List, Dict, Any, Tuple
 import numpy as np

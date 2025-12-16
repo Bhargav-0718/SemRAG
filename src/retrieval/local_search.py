@@ -4,8 +4,11 @@ Retrieves relevant chunks based on entity matching and semantic similarity.
 """
 
 import numpy as np
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 import logging
+import pickle
+import os
+from pathlib import Path
 from sklearn.metrics.pairwise import cosine_similarity
 from tqdm.auto import tqdm
 
@@ -23,7 +26,9 @@ class LocalSearch:
         top_k_chunks: int = 5,
         similarity_weight: float = 0.6,
         graph_weight: float = 0.4,
-        show_progress: bool = True
+        show_progress: bool = True,
+        cache_path: Optional[str] = None,
+        use_cache: bool = True
     ):
         """Initialize local search.
         
@@ -34,6 +39,9 @@ class LocalSearch:
             top_k_chunks: Number of chunks to retrieve
             similarity_weight: Weight for semantic similarity score
             graph_weight: Weight for graph-based score
+            show_progress: Whether to show progress bars
+            cache_path: Path to save/load cached embeddings
+            use_cache: Whether to use cached embeddings if available
         """
         self.graph = graph
         self.embedding_function = embedding_function
@@ -42,28 +50,177 @@ class LocalSearch:
         self.similarity_weight = similarity_weight
         self.graph_weight = graph_weight
         self.show_progress = show_progress
+        self.cache_path = cache_path
+        self.use_cache = use_cache
         
         # Cache for embeddings
         self.chunk_embeddings = {}
+        self.entity_embeddings = {}  # Cache for entity embeddings
     
-    def compute_chunk_embeddings(self, chunks: List[Dict[str, Any]]):
+    def load_cached_embeddings(self) -> bool:
+        """Load embeddings from cache file if available.
+        
+        Returns:
+            True if embeddings were loaded successfully, False otherwise
+        """
+        if not self.use_cache or not self.cache_path:
+            return False
+        
+        cache_file = Path(self.cache_path)
+        if not cache_file.exists():
+            logger.info(f"No cached embeddings found at {self.cache_path}")
+            return False
+        
+        try:
+            with open(cache_file, 'rb') as f:
+                cache_data = pickle.load(f)
+                # Support both old format (dict) and new format (dict with chunks and entities)
+                if isinstance(cache_data, dict) and "chunks" in cache_data and "entities" in cache_data:
+                    self.chunk_embeddings = cache_data["chunks"]
+                    self.entity_embeddings = cache_data["entities"]
+                else:
+                    # Old format - only chunk embeddings
+                    self.chunk_embeddings = cache_data
+                    self.entity_embeddings = {}
+            logger.info(f"Loaded {len(self.chunk_embeddings)} chunk embeddings and {len(self.entity_embeddings)} entity embeddings from cache")
+            return True
+        except Exception as e:
+            logger.warning(f"Failed to load cached embeddings: {e}")
+            return False
+    
+    def save_cached_embeddings(self):
+        """Save embeddings to cache file."""
+        if not self.use_cache or not self.cache_path:
+            return
+        
+        try:
+            cache_file = Path(self.cache_path)
+            cache_file.parent.mkdir(parents=True, exist_ok=True)
+            
+            cache_data = {
+                "chunks": self.chunk_embeddings,
+                "entities": self.entity_embeddings
+            }
+            
+            with open(cache_file, 'wb') as f:
+                pickle.dump(cache_data, f)
+            logger.info(f"Saved {len(self.chunk_embeddings)} chunk embeddings and {len(self.entity_embeddings)} entity embeddings to cache")
+        except Exception as e:
+            logger.error(f"Failed to save cached embeddings: {e}")
+    
+    def compute_chunk_embeddings(self, chunks: List[Dict[str, Any]], force_recompute: bool = False):
         """Precompute embeddings for all chunks.
         
         Args:
             chunks: List of chunk dictionaries
+            force_recompute: Force recomputation even if cache exists
         """
-        logger.info(f"Computing embeddings for {len(chunks)} chunks")
-        iterable = tqdm(chunks, desc="Embedding chunks", unit="chunk") if self.show_progress else chunks
+        # Try to load from cache first
+        if not force_recompute and self.load_cached_embeddings():
+            # Verify all chunks have embeddings
+            missing_chunks = [c for c in chunks if c["chunk_id"] not in self.chunk_embeddings]
+            if not missing_chunks:
+                logger.info("All chunk embeddings loaded from cache")
+            else:
+                logger.info(f"Found {len(missing_chunks)} chunks without cached embeddings, computing...")
+            # Only process missing chunks
+            chunks = missing_chunks
         
-        for chunk in iterable:
-            chunk_id = chunk["chunk_id"]
-            chunk_text = chunk.get("text", "")
+        if chunks:  # Only compute if there are chunks to process
+            logger.info(f"Computing embeddings for {len(chunks)} chunks")
+            iterable = tqdm(chunks, desc="Embedding chunks", unit="chunk") if self.show_progress else chunks
+            
+            for chunk in iterable:
+                chunk_id = chunk["chunk_id"]
+                chunk_text = chunk.get("text", "")
+                
+                try:
+                    embedding = self.embedding_function(chunk_text)
+                    self.chunk_embeddings[chunk_id] = embedding
+                except Exception as e:
+                    logger.error(f"Error computing embedding for chunk {chunk_id}: {e}")
+        
+        # Compute entity embeddings if not cached
+        self._compute_entity_embeddings()
+        
+        # Save to cache if anything was computed
+        if chunks or self.entity_embeddings:
+            self.save_cached_embeddings()
+    
+    def _compute_entity_embeddings(self, batch_size: int = 50):
+        """Precompute embeddings for all entities in the graph using batch processing.
+        
+        Args:
+            batch_size: Number of entities to process in each batch
+        """
+        entity_nodes = [n for n in self.graph.nodes() if n.startswith("entity_")]
+        
+        # Filter out entities that are already cached
+        entities_to_compute = []
+        for entity_node in entity_nodes:
+            if entity_node not in self.entity_embeddings:
+                entity_data = self.graph.nodes[entity_node]
+                entity_name = entity_data.get("entity_name", "")
+                entity_desc = entity_data.get("description", "")
+                entity_text = f"{entity_name} {entity_desc}"
+                entities_to_compute.append((entity_node, entity_text))
+        
+        if not entities_to_compute:
+            logger.info("All entity embeddings loaded from cache")
+            return
+        
+        logger.info(f"Computing embeddings for {len(entities_to_compute)} entities in batches of {batch_size}")
+        
+        # Check if batch embedding is available
+        if hasattr(self.embedding_function, '__self__') and hasattr(self.embedding_function.__self__, 'get_embeddings_batch'):
+            # Use batch processing with progress bar
+            entity_texts = [text for _, text in entities_to_compute]
+            entity_nodes_list = [node for node, _ in entities_to_compute]
             
             try:
-                embedding = self.embedding_function(chunk_text)
-                self.chunk_embeddings[chunk_id] = embedding
+                # Process in batches with progress bar
+                all_embeddings = []
+                num_batches = (len(entity_texts) + batch_size - 1) // batch_size
+                
+                if self.show_progress:
+                    batch_iterator = tqdm(range(0, len(entity_texts), batch_size), 
+                                        desc="Embedding entity batches", 
+                                        total=num_batches,
+                                        unit="batch")
+                else:
+                    batch_iterator = range(0, len(entity_texts), batch_size)
+                
+                for i in batch_iterator:
+                    batch_texts = entity_texts[i:i + batch_size]
+                    batch_embeddings = self.embedding_function.__self__.get_embeddings_batch(
+                        batch_texts, 
+                        batch_size=batch_size
+                    )
+                    all_embeddings.extend(batch_embeddings)
+                
+                # Store embeddings
+                for entity_node, embedding in zip(entity_nodes_list, all_embeddings):
+                    self.entity_embeddings[entity_node] = embedding
+                    
+                logger.info(f"Successfully computed {len(all_embeddings)} entity embeddings using batch processing")
             except Exception as e:
-                logger.error(f"Error computing embedding for chunk {chunk_id}: {e}")
+                logger.warning(f"Batch embedding failed ({e}), falling back to individual processing")
+                # Fall back to individual processing
+                self._compute_entity_embeddings_individual(entities_to_compute)
+        else:
+            # Fall back to individual processing
+            self._compute_entity_embeddings_individual(entities_to_compute)
+    
+    def _compute_entity_embeddings_individual(self, entities_to_compute):
+        """Compute entity embeddings one at a time (fallback method)."""
+        iterable = tqdm(entities_to_compute, desc="Embedding entities", unit="entity") if self.show_progress else entities_to_compute
+        
+        for entity_node, entity_text in iterable:
+            try:
+                embedding = self.embedding_function(entity_text)
+                self.entity_embeddings[entity_node] = embedding
+            except Exception as e:
+                logger.error(f"Error computing embedding for entity {entity_node}: {e}")
     
     def find_relevant_entities(self, query: str) -> List[Tuple[str, float]]:
         """Find entities relevant to the query.
@@ -86,14 +243,18 @@ class LocalSearch:
         for entity_node in entity_nodes:
             entity_data = self.graph.nodes[entity_node]
             entity_name = entity_data.get("entity_name", "")
-            entity_desc = entity_data.get("description", "")
-            
-            # Compute text for embedding
-            entity_text = f"{entity_name} {entity_desc}"
             
             try:
-                entity_embedding = self.embedding_function(entity_text)
-                entity_embedding = np.array(entity_embedding).reshape(1, -1)
+                # Use cached entity embedding
+                if entity_node in self.entity_embeddings:
+                    entity_embedding = np.array(self.entity_embeddings[entity_node]).reshape(1, -1)
+                else:
+                    # Fallback: compute on-the-fly (shouldn't happen if _compute_entity_embeddings ran)
+                    entity_desc = entity_data.get("description", "")
+                    entity_text = f"{entity_name} {entity_desc}"
+                    entity_embedding = self.embedding_function(entity_text)
+                    entity_embedding = np.array(entity_embedding).reshape(1, -1)
+                    self.entity_embeddings[entity_node] = entity_embedding.flatten().tolist()
                 
                 # Compute similarity
                 similarity = cosine_similarity(query_embedding, entity_embedding)[0][0]

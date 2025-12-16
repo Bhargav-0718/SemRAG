@@ -5,6 +5,7 @@ Supports OpenAI, Anthropic, and local models.
 
 import os
 import json
+import time
 from typing import Dict, Any, Optional, List
 import openai
 from openai import OpenAI
@@ -131,44 +132,74 @@ class LLMClient:
         """
         return [self.generate(prompt, temperature=temperature) for prompt in prompts]
     
-    def get_embedding(self, text: str, model: str = "text-embedding-ada-002") -> List[float]:
+    def get_embedding(self, text: str, model: str = "text-embedding-ada-002", max_retries: int = 3) -> List[float]:
         """Get embedding vector for text.
         
         Args:
             text: Input text
             model: Embedding model name
+            max_retries: Maximum number of retry attempts
             
         Returns:
             Embedding vector
         """
-        try:
-            if self.provider == "openai":
-                response = self.client.embeddings.create(
-                    model=model,
-                    input=text
-                )
-                return response.data[0].embedding
-        except Exception as e:
-            logger.error(f"Error getting embedding: {e}")
-            raise
+        for attempt in range(max_retries):
+            try:
+                if self.provider == "openai":
+                    response = self.client.embeddings.create(
+                        model=model,
+                        input=text
+                    )
+                    return response.data[0].embedding
+            except openai.RateLimitError as e:
+                if attempt < max_retries - 1:
+                    wait_time = (2 ** attempt) * 2  # Exponential backoff: 2s, 4s, 8s
+                    logger.warning(f"Rate limit hit, waiting {wait_time}s before retry {attempt + 1}/{max_retries}")
+                    time.sleep(wait_time)
+                else:
+                    logger.error(f"Rate limit error after {max_retries} attempts: {e}")
+                    raise
+            except Exception as e:
+                logger.error(f"Error getting embedding: {e}")
+                raise
     
-    def get_embeddings_batch(self, texts: List[str], model: str = "text-embedding-ada-002") -> List[List[float]]:
-        """Get embedding vectors for multiple texts.
+    def get_embeddings_batch(self, texts: List[str], model: str = "text-embedding-ada-002", max_retries: int = 3, batch_size: int = 100) -> List[List[float]]:
+        """Get embedding vectors for multiple texts with batching and retry logic.
         
         Args:
             texts: List of input texts
             model: Embedding model name
+            max_retries: Maximum number of retry attempts per batch
+            batch_size: Number of texts to process in each API call
             
         Returns:
             List of embedding vectors
         """
-        try:
-            if self.provider == "openai":
-                response = self.client.embeddings.create(
-                    model=model,
-                    input=texts
-                )
-                return [data.embedding for data in response.data]
-        except Exception as e:
-            logger.error(f"Error getting embeddings: {e}")
-            raise
+        all_embeddings = []
+        
+        # Process in batches
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i + batch_size]
+            
+            for attempt in range(max_retries):
+                try:
+                    if self.provider == "openai":
+                        response = self.client.embeddings.create(
+                            model=model,
+                            input=batch
+                        )
+                        all_embeddings.extend([data.embedding for data in response.data])
+                        break  # Success, move to next batch
+                except openai.RateLimitError as e:
+                    if attempt < max_retries - 1:
+                        wait_time = (2 ** attempt) * 2  # Exponential backoff
+                        logger.warning(f"Rate limit hit on batch {i//batch_size + 1}, waiting {wait_time}s before retry {attempt + 1}/{max_retries}")
+                        time.sleep(wait_time)
+                    else:
+                        logger.error(f"Rate limit error after {max_retries} attempts: {e}")
+                        raise
+                except Exception as e:
+                    logger.error(f"Error getting embeddings for batch: {e}")
+                    raise
+        
+        return all_embeddings

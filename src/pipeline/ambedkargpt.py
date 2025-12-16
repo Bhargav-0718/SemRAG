@@ -450,6 +450,12 @@ class AmbedkarGPT:
     
     def _initialize_retrieval(self):
         """Initialize retrieval components with loaded data."""
+        # Get cache settings
+        use_cache = self.config.get("retrieval", {}).get("cache_embeddings", True)
+        chunk_cache_path = self.config.get("data", {}).get("chunk_embeddings", "./data/processed/chunk_embeddings.pkl") if use_cache else None
+        community_cache_path = self.config.get("data", {}).get("community_embeddings", "./data/processed/community_embeddings.pkl") if use_cache else None
+        show_progress = self.config.get("retrieval", {}).get("local_search", {}).get("progress_bar", True)
+        
         # Local search
         self.local_search = LocalSearch(
             graph=self.graph,
@@ -457,14 +463,19 @@ class AmbedkarGPT:
             top_k_entities=self.config["retrieval"]["local_search"]["top_k_entities"],
             top_k_chunks=self.config["retrieval"]["local_search"]["top_k_chunks"],
             similarity_weight=self.config["retrieval"]["local_search"]["similarity_weight"],
-            graph_weight=self.config["retrieval"]["local_search"]["graph_weight"]
+            graph_weight=self.config["retrieval"]["local_search"]["graph_weight"],
+            show_progress=show_progress,
+            cache_path=chunk_cache_path,
+            use_cache=use_cache
         )
         self.local_search.compute_chunk_embeddings(self.chunks)
         
         # Global search
         self.global_search = GlobalSearch(
             embedding_function=self.llm_client.get_embedding,
-            top_k_communities=self.config["retrieval"]["global_search"]["top_k_communities"]
+            top_k_communities=self.config["retrieval"]["global_search"]["top_k_communities"],
+            cache_path=community_cache_path,
+            use_cache=use_cache
         )
         self.global_search.compute_community_embeddings(self.community_summaries)
         
