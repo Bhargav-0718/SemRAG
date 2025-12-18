@@ -81,9 +81,19 @@ def main():
         # Display results
         print(f"\nAnswer:\n{result['answer']}")
         print(f"\nSources used: {len(result.get('context', []))} chunks")
-        print(f"Entities referenced: {', '.join(result.get('entities', [])[:5])}")
-        if len(result.get('entities', [])) > 5:
-            print(f"  ... and {len(result['entities']) - 5} more")
+        
+        # Show entities for local/hybrid, communities for global
+        if result.get('search_type') == 'global':
+            num_communities = result.get('num_communities', 0)
+            print(f"Communities used: {num_communities}")
+        else:
+            entities = result.get('entities', [])
+            if entities:
+                print(f"Entities referenced: {', '.join(entities[:5])}")
+                if len(entities) > 5:
+                    print(f"  ... and {len(entities) - 5} more")
+            else:
+                print(f"Entities referenced: None")
     
     print("\n" + "="*80)
     print("Interactive Mode")
@@ -125,8 +135,14 @@ def main():
         print(f"\n{'-'*80}")
         print(f"Answer:\n{result['answer']}")
         print(f"\nSources: {len(result.get('context', []))} chunks")
-        if result.get('entities'):
+        
+        # Show entities for local/hybrid, communities for global
+        if result.get('search_type') == 'global':
+            num_communities = result.get('num_communities', 0)
+            print(f"Communities used: {num_communities}")
+        elif result.get('entities'):
             print(f"Key entities: {', '.join(result['entities'][:5])}")
+        
         print('-'*80 + "\n")
 
 if __name__ == "__main__":

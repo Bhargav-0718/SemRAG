@@ -69,7 +69,21 @@ nltk.download('punkt')
 
 ## Quick Start
 
-### Basic Usage
+### Using the Streamlit Web UI (Recommended) ⭐
+
+**Start the interactive web app**:
+```bash
+streamlit run streamlit_app.py
+```
+
+Then in your browser at `http://localhost:8501`:
+- Click **Load Processed Data** to load cached embeddings (instant)
+- Or **Process Document** to process a new PDF (first run takes 2-3 min)
+- Select search type: Local (specific), Global (themes), or Hybrid (best of both)
+- Type your question and click **Search**
+- View detailed answers with sources and entities
+
+### Python API Usage
 
 ```python
 from src.pipeline.ambedkargpt import AmbedkarGPT

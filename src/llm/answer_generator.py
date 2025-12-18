@@ -84,7 +84,8 @@ class AnswerGenerator:
             "answer": answer,
             "search_type": "global",
             "num_communities": len(community_summaries),
-            "community_summaries": community_summaries
+            "community_summaries": community_summaries,
+            "context": community_summaries  # For backward compatibility
         }
     
     def generate_hybrid_answer(
@@ -116,6 +117,9 @@ class AnswerGenerator:
         
         answer = self.llm_client.generate(prompt, temperature=0.7)
         
+        # Combine local context chunks (not summaries) for the context field
+        combined_context = local_context  # Prioritize chunks over summaries
+        
         return {
             "answer": answer,
             "search_type": "hybrid",
@@ -123,7 +127,8 @@ class AnswerGenerator:
             "num_global_communities": len(global_context),
             "entities": entities,
             "local_context": local_context,
-            "global_context": global_context
+            "global_context": global_context,
+            "context": combined_context  # For backward compatibility
         }
     
     def generate_answer(
