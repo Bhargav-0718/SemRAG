@@ -178,6 +178,20 @@ else:
                 
                 # Display results
                 st.markdown("## 📊 Results")
+
+                # Normalize search type
+                search_type_sys = search_type_map[search_type]
+
+                # Extract contexts
+                local_context = []
+                global_context = []
+                if search_type_sys == "global":
+                    global_context = result.get("context", [])  # community summaries
+                elif search_type_sys == "hybrid":
+                    local_context = result.get("local_context", [])
+                    global_context = result.get("global_context", [])
+                else:
+                    local_context = result.get("context", [])
                 
                 # Answer
                 st.markdown("### 💡 Answer")
@@ -187,13 +201,21 @@ else:
                 tab1, tab2, tab3 = st.tabs(["📄 Sources", "🏷️ Entities", "📈 Details"])
                 
                 with tab1:
-                    st.markdown("### Source Chunks")
-                    if "retrieved_chunks" in result and result["retrieved_chunks"]:
-                        for i, chunk in enumerate(result["retrieved_chunks"][:5], 1):
-                            with st.expander(f"Source {i}"):
+                    st.markdown("### Sources")
+                    # Local / Hybrid chunks
+                    if local_context:
+                        st.markdown("**Chunks**")
+                        for i, chunk in enumerate(local_context[:5], 1):
+                            with st.expander(f"Chunk {i}"):
                                 st.write(chunk)
-                    else:
-                        st.info("No specific chunks retrieved")
+                    # Global summaries
+                    if global_context:
+                        st.markdown("**Community Summaries**")
+                        for i, summary in enumerate(global_context[:5], 1):
+                            with st.expander(f"Summary {i}"):
+                                st.write(summary)
+                    if not local_context and not global_context:
+                        st.info("No sources retrieved")
                 
                 with tab2:
                     st.markdown("### Relevant Entities")
@@ -212,15 +234,19 @@ else:
                     col1, col2, col3 = st.columns(3)
                     
                     with col1:
-                        if "num_candidates" in result:
+                        if local_context:
+                            st.metric("Context Chunks", len(local_context))
+                        elif "num_candidates" in result:
                             st.metric("Candidate Chunks", result["num_candidates"])
                     
                     with col2:
                         st.metric("Search Type", search_type.upper())
                     
                     with col3:
-                        if "search_stats" in result:
-                            st.metric("Relevant Items", len(result.get("entities", [])))
+                        if global_context:
+                            st.metric("Communities Used", len(global_context))
+                        else:
+                            st.metric("Entities", len(result.get("entities", [])))
                 
                 st.divider()
                 st.success("✅ Query processing complete!")
