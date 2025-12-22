@@ -1,5 +1,3 @@
-"""LLM client and prompt management modules."""
-
 from .llm_client import LLMClient
 from .prompt_templates import PromptTemplates
 from .answer_generator import AnswerGenerator

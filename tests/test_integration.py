@@ -1,8 +1,3 @@
-"""Integration tests for AmbedkarGPT pipeline.
-
-Tests the complete end-to-end workflow of the SemRAG system.
-"""
-
 import pytest
 import os
 import json

@@ -1,8 +1,3 @@
-"""Unit tests for retrieval modules.
-
-Tests local search, global search, and ranking functionality.
-"""
-
 import pytest
 import networkx as nx
 import yaml

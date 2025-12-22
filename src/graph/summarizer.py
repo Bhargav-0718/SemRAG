@@ -1,8 +1,3 @@
-"""Summarization module for chunks and communities.
-
-Generates summaries for individual chunks and community-level summaries.
-"""
-
 from typing import List, Dict, Any
 import logging
 from tqdm.auto import tqdm

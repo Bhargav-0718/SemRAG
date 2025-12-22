@@ -1,12 +1,3 @@
-"""Main SemRAG pipeline for AmbedkarGPT.
-
-Orchestrates the entire SemRAG workflow:
-1. Document loading and semantic chunking
-2. Entity extraction and graph building
-3. Community detection and summarization
-4. Retrieval and answer generation
-"""
-
 import os
 import json
 import yaml

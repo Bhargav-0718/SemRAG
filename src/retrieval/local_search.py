@@ -1,8 +1,3 @@
-"""Local search module for entity-based retrieval.
-
-Retrieves relevant chunks based on entity matching and semantic similarity.
-"""
-
 import numpy as np
 from typing import List, Dict, Any, Tuple, Optional
 import logging

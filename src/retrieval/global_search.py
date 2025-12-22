@@ -1,8 +1,3 @@
-"""Global search module for community-based retrieval.
-
-Retrieves relevant community summaries for high-level queries.
-"""
-
 import numpy as np
 from typing import List, Dict, Any, Tuple, Optional
 import logging

@@ -1,8 +1,3 @@
-"""Answer generation module for SemRAG system.
-
-Handles local, global, and hybrid search answer generation.
-"""
-
 from typing import Dict, Any, List, Optional
 import logging
 from .llm_client import LLMClient
@@ -117,7 +112,6 @@ class AnswerGenerator:
         
         answer = self.llm_client.generate(prompt, temperature=0.7)
         
-        # Combine local context chunks (not summaries) for the context field
         combined_context = local_context  # Prioritize chunks over summaries
         
         return {

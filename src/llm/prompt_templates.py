@@ -1,8 +1,3 @@
-"""Prompt templates for SemRAG system.
-
-Based on the SemRAG research paper's prompt engineering strategies.
-"""
-
 from typing import List, Dict, Any
 
 

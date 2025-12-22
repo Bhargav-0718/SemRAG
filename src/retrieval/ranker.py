@@ -1,8 +1,3 @@
-"""Ranker module for re-ranking and hybrid retrieval.
-
-Combines local and global search results with optional re-ranking.
-"""
-
 import numpy as np
 from typing import List, Dict, Any, Tuple
 import logging

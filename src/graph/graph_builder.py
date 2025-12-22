@@ -1,8 +1,3 @@
-"""Graph builder module for constructing knowledge graph.
-
-Builds a networkx graph from entities, chunks, and their relationships.
-"""
-
 import networkx as nx
 from typing import List, Dict, Any, Optional
 import logging

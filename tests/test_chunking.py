@@ -1,8 +1,3 @@
-"""Unit tests for chunking modules.
-
-Tests semantic chunking and buffer merging functionality.
-"""
-
 import pytest
 from unittest.mock import Mock, patch
 from src.chunking.semantic_chunker import SemanticChunker

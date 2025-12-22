@@ -1,8 +1,3 @@
-"""
-Streamlit UI for AmbedkarGPT - SemRAG System
-Interactive interface for querying the Ambedkar knowledge base
-"""
-
 import streamlit as st
 import os
 from pathlib import Path

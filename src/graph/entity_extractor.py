@@ -1,8 +1,3 @@
-"""Entity extraction module using LLM.
-
-Extracts entities and relationships from text chunks.
-"""
-
 import json
 from typing import List, Dict, Any, Tuple
 import logging

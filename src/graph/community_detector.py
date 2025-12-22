@@ -1,8 +1,3 @@
-"""Community detection module for knowledge graph.
-
-Detects communities in the graph using Leiden or Louvain algorithm.
-"""
-
 import networkx as nx
 from typing import List, Dict, Any, Set
 import logging
@@ -89,8 +84,6 @@ class CommunityDetector:
         ig_graph.add_edges(edges)
         
         # Run Leiden algorithm
-        # Some versions of leidenalg do not support 'resolution_parameter' for ModularityVertexPartition.
-        # Try without the parameter; if a non-default resolution was requested, warn that it's ignored.
         try:
             if self.resolution != 1.0:
                 logger.warning("Leiden ModularityPartition: 'resolution' ignored due to library constraints; using default.")

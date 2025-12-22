@@ -1,11 +1,8 @@
-"""Example usage of AmbedkarGPT system."""
-
 import json
 import os
 from src.pipeline.ambedkargpt import AmbedkarGPT
 
 def main():
-    """Run example queries on the AmbedkarGPT system."""
     
     # Initialize the system
     print("Initializing AmbedkarGPT...")
@@ -146,7 +143,6 @@ def main():
         print('-'*80 + "\n")
 
 if __name__ == "__main__":
-    # Check for API key
     if not os.environ.get("OPENAI_API_KEY"):
         print("⚠️  Warning: OPENAI_API_KEY not found in environment variables.")
         print("Please set it before running:")

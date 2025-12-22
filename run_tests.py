@@ -1,5 +1,3 @@
-"""Test runner script for running all tests and generating a report."""
-
 import subprocess
 import sys
 from pathlib import Path

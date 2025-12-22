@@ -1,8 +1,3 @@
-"""LLM client for interacting with various language models.
-
-Supports OpenAI, Anthropic, and local models.
-"""
-
 import os
 import json
 import time
